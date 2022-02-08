@@ -1,0 +1,322 @@
+{% load static %}
+{% static "images" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsFlash</title>
+    <link rel="stylesheet" href="{% static 'dist/css/bootstrap.css' %}">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" /> -->
+    <style>
+        .side_section {
+            height: 100vh;
+            background: #363535;
+
+            text-align: center;
+            width: 8%;
+
+            float: left;
+
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+
+        .logo {
+            height: 25px;
+            width: 70px;
+            margin-left: 5px;
+            margin-top: 10px;
+        }
+
+        .sec_head {
+            color: #666666;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        ul {
+            list-style: none;
+            font-size: 11px;
+            margin-left: -20px;
+
+        }
+
+        li {
+            padding: 3px;
+        }
+
+        li:hover {
+            background: #9b9898;
+
+
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        footer {
+
+            background: #141435;
+            position: absolute;
+            bottom: 0;
+            width: 8%;
+
+
+
+
+        }
+
+        nav {
+            height: 40px;
+
+            background: #151530;
+            width: 91%;
+            float: right;
+
+        }
+
+        .btn {
+            padding: 2px 10px !important;
+            font-size: 13px !important;
+            float: right !important;
+            margin: 5px;
+            font-weight: bold;
+
+        }
+
+        .card-body {
+            min-height: 180px;
+            box-shadow: 0px 0px 5px gray;
+
+            padding: 2px !important;
+
+
+        }
+
+        .card-img {
+             height: 100%;
+         
+            width: 100%;
+
+        }
+
+        .container-fluid {
+            width: 100% !important;
+        }
+
+        .weather {
+            height: 180px;
+            box-shadow: 0px 0px 2px blue;
+        }
+
+        .pie-chart {
+            height: 180px;
+            box-shadow: 0px 0px 2px blue;
+        }
+
+        .bar-chart {
+            height: 180px;
+            box-shadow: 0px 0px 2px blue;
+        }
+
+        .read-more{
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body margin="0">
+
+
+
+
+    <section class="side_section">
+        <img src="{% static 'logo.jpg' %}" class="img-fluid logo">
+        <hr class="text-light" />
+        <p class="sec_head text-start">Categories</p>
+
+        <ul class="text-start ">
+            <li class="mb-2"><a href="">All news</a></li>
+            <li class="mb-2"><a href="">India</a></li>
+            <li class="mb-2"><a href="">Business</a></li>
+            <li class="mb-2"><a href="">Sports</a></li>
+            <li class="mb-2"><a href="">World</a></li>
+            <li class="mb-2"><a href="">Politics</a></li>
+            <li class="mb-2"><a href="">Technology</a></li>
+            <li class="mb-2"><a href="">Startup</a></li>
+            <li class="mb-2"><a href="">Entertainment</a></li>
+            <li class="mb-2"><a href="">Miscellaneous</a></li>
+            <li class="mb-2"><a href="">Hatke</a></li>
+            <li class="mb-2"><a href="">Science</a></li>
+            <li class="mb-2"><a href="">Automobile</a></li>
+        </ul>
+        <footer>
+            <p><a class="text-decoration-none" href="">About</a></p>
+        </footer>
+
+    </section>
+    </div>
+
+
+
+
+    <nav>
+        <div>
+            <!-- <script>
+                   console.log(user);
+
+
+            </script> -->
+            {% if user.is_authenticated %}
+            <button class="text-end btn btn-outline-light">Hello, {{user.first_name}}</button>
+            <button class="text-end btn btn-outline-light"><a href="accounts/logout" >Logout</a></button>
+
+            {% else %}
+            <button class="text-end btn btn-outline-light"><a href="accounts/register" >Register</a></button>
+            <button class="text-end btn btn-outline-light"><a href="accounts/login" >Login</a></button>
+            {% endif %}
+        </div>
+    </nav>
+
+
+
+    <div class="row">
+        <div class="col-lg-6 mt-4">
+
+            {% for new in news %}
+
+            <div class="card-body mb-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <img src="{{new.img.url}}" class="img-fluid card-img" />
+                    </div>
+                    <div class="col-lg-8">
+                        <h5>{{new.headline}}</h5>
+                        <p class="card-p mt-2">
+                            {{new.desc}}
+                        </p>
+                        {% if user.is_authenticated %}
+                        <div class="read-more">Read more <a class="text-primary" href="{{new.readMore}}">here</a></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+<!-- 
+            <div class="card-body mb-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <img src="{% static '2.jpg' %}" class="img-fluid card-img" />
+                    </div>
+                    <div class="col-lg-8">
+                        <h5>{{news2.headline}}</h5>
+                        <p class="card-p mt-2">
+                            {{news2.desc}}
+                        </p>
+                        <div class="read-more">Read more <a class="text-primary" href="{{news2.readMore}}">here</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body mb-3">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <img src="{% static '2.jpg' %}" class="img-fluid card-img" />
+                    </div>
+                    <div class="col-lg-8">
+                        <h5>{{news3.headline}}</h5>
+                        <p class="card-p mt-2">
+                            {{news3.desc}}
+                        </p>
+                        <div class="read-more">Read more <a class="text-primary" href="{{news3.readMore}}">here</a></div>
+                    </div>
+                </div>
+            </div> -->
+
+
+           
+
+        </div>
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-3 mt-4">
+
+            <div class="column is-offset-0 is-12">
+
+                <form method="POST">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            {{ form.name }}
+                        </div>
+                        <div class="control">
+                            <button class="button is-info">
+                                Add City
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <form method="POST">
+                    <!-- {% csrf_token %} -->
+                   <div class="input-group">
+                      <input type="text" id="" class="form-control form-control-sm"/>
+                      <button class="btn btn-primary">search</button>
+                   </div>
+                </form>
+            </div>
+
+            <!-- {% for weather in weather_data %} -->
+
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-50x50">
+                            <img src="http://openweathermap.org/img/w/{{ weather.icon}}" alt="Image" class="img-fluid d-inline">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content ">
+                            
+                            <p>
+                                <span class="title">Bangalore</span>
+                                <br>
+                                <span class="subtitle">29° C</span>
+                                <br> partially cloudyS
+                            </p>
+                        </div>
+                    </div>
+
+                </article>
+            </div>
+
+            <!-- {% endfor %} -->
+
+            <div class="weather mb-3">
+
+            </div> 
+           <!-- <div class="pie-chart mb-3"></div>     -->
+        </div>
+    </div>
+
+    
+
+</body>
+
+</html>
